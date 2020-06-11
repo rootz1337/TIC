@@ -1,0 +1,44 @@
+#!/usr/bin/python3
+import os
+import requests
+from time import sleep
+
+D = "\033[0m"
+R = "\033[31m"
+G = "\033[32m"
+Y = "\033[33m"
+B = "\033[34m"
+P = "\033[35m"
+C = "\033[36m"
+
+def banner():
+	print("\n{}  ________________".format(Y))
+	print(" /_  __/  _/ ____/")
+	print("  / /  / // /")
+	print(" / / _/ // /___")
+	print("/_/ /___/\____/{}Coded by rootz".format(R))
+	print("Instagram: @whoisrootz\n\n{}".format(D))
+
+def get_ip():
+	try:
+		return requests.get("http://icanhazip.com/", proxies={"http": "socks5://127.0.0.1:9050"}).text.strip()
+	except requests.exceptions.ConnectionError:
+		print(" {}!{} cannot connect to internet, check if tor is running".format(R, D))
+		os._exit(1)
+
+def ip_changer():
+	while True:
+		IP = get_ip()
+		print(" {}+{} IP address: {}".format(G, D, IP))
+		sleep(0.2)
+		print(" {}-{} sleeping for {} seconds".format(Y, D, delay))
+		sleep(delay)
+		print(" {}+{} changing tor ip".format(G, D))
+		os.system("killall -HUP tor")
+
+try:
+	banner()
+	delay = int(input(" {}-{} delay (seconds): ".format(Y, D)))
+	ip_changer()
+except KeyboardInterrupt:
+	os._exit(1)
